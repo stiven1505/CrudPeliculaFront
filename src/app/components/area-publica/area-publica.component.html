@@ -1,0 +1,37 @@
+<div class="container mt-4">
+    <h2>Películas Publicadas</h2>
+  
+    <!-- Búsqueda de películas -->
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Buscar por nombre"
+        [(ngModel)]="searchTerm"
+      />
+    </div>
+  
+    <!-- Opciones de ordenación -->
+    <div class="mb-3">
+      <label for="sort" class="form-label">Ordenar por:</label>
+      <select class="form-select" [(ngModel)]="sortOption" (change)="sortPeliculas()">
+        <option value="puntaje">Puntaje (0-9)</option>
+        <option value="fecha">Fecha de Creación</option>
+      </select>
+    </div>
+  
+    <!-- Mostrar las películas -->
+    <div class="row">
+      <div *ngFor="let pelicula of sortPeliculas()" class="col-md-4 mb-4">
+        <div class="card">
+          <img [src]="pelicula.cubierta" class="card-img-top" alt="Cubierta de la película" />
+          <div class="card-body">
+            <h5 class="card-title">{{ pelicula.nombre }}</h5>
+            <p class="card-text">{{ pelicula.descripcion }}</p>
+            <p><strong>Puntaje: </strong>{{ pelicula.puntaje }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

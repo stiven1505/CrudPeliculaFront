@@ -1,0 +1,192 @@
+
+
+<div class="container mt-3">
+  <button
+    type="button"
+    class="btn btn-primary btn-sm btn-block"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+  >
+    <i class="fa fa-save"> </i> Nueva Pelicula
+  </button>
+  <h2>Lista de Películas</h2>
+  <table class="table table-bordered">
+    <thead class="thead-dark table-info">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Puntaje</th>
+        <th>Estado</th>
+        <th>Estado Alquiler</th>
+        <th>F. Creación</th>
+        <th>F. Modificacion</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of listPeliculas">
+        <td>{{ item.id }}</td>
+        <td>{{ item.nombre }}</td>
+        <td>{{ item.descripcion }}</td>
+        <td>{{ item.puntaje }}</td>
+        <td>{{ item.estado }}</td>
+        <td>{{ item.estadoAlquiler }}</td>
+        <td>{{ item.fechaCreacion }}</td>
+        <td>{{ item.fechaModificacion }}</td>
+
+        <td class="d-flex justify-content-start">
+          <button
+            (click)="selectItem(item)"
+            type="button"
+            class="btn btn-warning btn-sm me-2"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            (click)="selectItem(item)"
+          >
+            <i class="fa fa-edit"></i>
+          </button>
+
+          
+          <button type="button" class="btn btn-danger btn-sm me-2" (click)="delete(item.id)">
+            <i class="fa fa-bomb"></i>
+          </button>
+
+          <button type="button" class="btn btn-secondary btn-sm">
+            Alquilar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 *ngIf="!isUpdate" class="modal-title" id="exampleModalLabel">
+          Agregar Nueva Película
+        </h5>
+        <h5 *ngIf="isUpdate" class="modal-title" id="exampleModalLabel">
+          Editar Película
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="newPelicula()"
+        ></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Formulario para ingresar una nueva película -->
+        <form id="nuevaPeliculaForm" [formGroup]="formPelicula">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre de la Película</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombre"
+              name="nombre"
+              required
+              formControlName="nombre"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea
+              class="form-control"
+              id="descripcion"
+              name="descripcion"
+              rows="3"
+              required
+              formControlName="descripcion"
+            ></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="puntaje" class="form-label">Puntaje (0-9)</label>
+            <input
+              type="number"
+              class="form-control"
+              id="puntaje"
+              name="puntaje"
+              step="0.1"
+              min="0"
+              max="10"
+              required
+              formControlName="puntaje"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <select
+              class="form-select"
+              id="estado"
+              name="estado"
+              required
+              formControlName="estado"
+            >
+              <option value="Publicada">Publicada</option>
+              <option value="Edicion">En Edición</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="estadoAlquiler" class="form-label"
+              >Estado de Alquiler</label
+            >
+            <select
+              class="form-select"
+              id="estadoAlquiler"
+              name="estadoAlquiler"
+              required
+              formControlName="estadoAlquiler"
+            >
+              <option value="Disponible">Disponible</option>
+              <option value="Alquilada">Alquilada</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="cubierta" class="form-label">URL de la Imagen (Cubierta)</label>
+            <input
+              type="text"
+              class="form-control"
+              id="cubierta"
+              name="cubierta"
+              required
+              placeholder="Ingrese la URL de la imagen"
+              formControlName="cubierta"
+            />
+          </div>
+          
+        </form>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+        <!-- Botón para guardar, visible solo cuando no es una actualización -->
+        <button *ngIf="!isUpdate" type="submit" class="btn btn-primary" (click)="save()">
+          Guardar
+        </button>
+
+        <!-- Botón para actualizar, visible solo cuando es una actualización -->
+        <button *ngIf="isUpdate" type="submit" class="btn btn-warning" (click)="update()">
+          Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
