@@ -1,15 +1,18 @@
 
 
 <div class="container mt-3">
-  <button
-    type="button"
-    class="btn btn-primary btn-sm btn-block"
-    data-bs-toggle="modal"
-    data-bs-target="#exampleModal"
-  >
-    <i class="fa fa-save"> </i> Nueva Pelicula
-  </button>
-  <h2>Lista de Películas</h2>
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Lista de Películas</h2>
+    <button
+      type="button"
+      class="btn btn-primary btn-sm"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      <i class="fa fa-save"></i> Nueva Película
+    </button>
+  </div>
+  
   <table class="table table-bordered">
     <thead class="thead-dark table-info">
       <tr>
@@ -52,9 +55,11 @@
             <i class="fa fa-bomb"></i>
           </button>
 
-          <button type="button" class="btn btn-secondary btn-sm">
-            Alquilar
-          </button>
+          <button (click)="alquilarPelicula(item)"  type="button" class="btn btn-secondary btn-sm"
+  >
+    {{ item.estadoAlquiler === 'Disponible' ? 'Alquilar' : 'Devolver' }}  <!-- Cambia el texto del botón -->
+  </button>
+
         </td>
       </tr>
     </tbody>

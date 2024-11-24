@@ -64,6 +64,20 @@ export class PeliculaService {
       );
   }
 
+// Método para actualizar el estado de alquiler de una película
+updateEstadoAlquiler(id: number, estadoAlquiler: string): Observable<any> {
+  const body = estadoAlquiler;  // Creamos el cuerpo de la solicitud con el nuevo estado
+  return this.httpClient
+    .put<any>(`${this.apiUrl}/updateEstadoAlquiler/${id}`, body)  // Utiliza PUT para actualizar el estado
+    .pipe(
+      map((data) => data),
+      catchError((error) => {
+        console.error('Error al actualizar el estado de alquiler', error);
+        return of(null);
+      })
+    );
+}
+
   /**
    * Método para alquilar una película 
    * 

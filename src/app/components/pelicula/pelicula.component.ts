@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -176,4 +176,25 @@ export class PeliculaComponent implements OnInit {
       console.error('Error al seleccionar la película:', error);
     }
   }
+
+// Método para alquilar o devolver una película dependiendo de su estado
+alquilarPelicula(pelicula: any): void {
+  // Condicional para verificar el estado actual y cambiarlo
+  if (pelicula.estadoAlquiler === 'Disponible') {
+    pelicula.estadoAlquiler = 'Alquilada';  // Si está disponible, cambiamos a alquilada
+  } else {
+    pelicula.estadoAlquiler = 'Disponible';  // Si está alquilada, cambiamos a disponible
+  }
+
+  // Llamamos al servicio para actualizar el estado
+  this.peliculaService.updateEstadoAlquiler(pelicula.id, pelicula.estadoAlquiler)
+    .subscribe(response => {
+      console.log('Estado de alquiler actualizado', response);
+    }, error => {
+      console.error('Error al actualizar el estado de alquiler', error);
+    });
+}
+
+  
+
 }
